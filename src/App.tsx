@@ -1,3 +1,4 @@
+import "./app.css";
 import imgGasPump from "./assets/logo.png";
 
 function App() {
