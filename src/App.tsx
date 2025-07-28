@@ -1,41 +1,58 @@
 import "./app.css";
 import imgGasPump from "./assets/logo.png";
-import { useState } from "react";
+import { useState, FormEvent } from "react";
+
+/*
+ethanol/gasoline
+if the result is less than 0.7, it's better to use ethanol
+*/
 
 function App() {
-  const [gasolinaInput, setGasolinaInput] = useState(1);
-  const [alcoolInput, setAlcoolInput] = useState(1);
+  const [gasolineInput, setGasolineInput] = useState(0);
+  const [ethanolInput, setEthanolInput] = useState(0);
 
-  function calcular(event) {
-    alert("Teste!");
+  function calculate(event: FormEvent) {
+    event.preventDefault();
+
+    const calculation = ethanolInput / gasolineInput;
+
+    if (calculation <= 0.7) {
+      alert("It is better to use ethanol");
+    } else {
+      alert("It is better to use gasoline");
+    }
   }
 
   return (
     <div>
       <main className="container">
-        <img className="imagem" src={imgGasPump} alt="bomba de gasolina" />
-        <h1 className="title">Qual a melhor opção?</h1>
-        <form className="form" onSubmit={calcular}>
-          <label>Álcool (preço por litro):</label>
+        <img className="image" src={imgGasPump} alt="bomba de gasolina" />
+        <h1 className="title">What’s the best option?</h1>
+        <form className="form" onSubmit={calculate}>
+          <label>Ethanol (price per liter)::</label>
           <input
             className="input"
             type="number"
-            placeholder="Insira o valor"
+            placeholder="Enter value"
             min="1"
             step="0.01"
             required
+            value={ethanolInput}
+            onChange={(e) => setEthanolInput(Number(e.target.value))}
           />
 
-          <label>Gasolina (preço por litro):</label>
+          <label>Gasoline (price per liter):</label>
           <input
             className="input"
             type="number"
-            placeholder="Insira o valor"
+            placeholder="Enter value"
             min="1"
             step="0.01"
             required
+            value={gasolineInput}
+            onChange={(e) => setGasolineInput(Number(e.target.value))}
           />
-          <input className="button" type="submit" value="Calcular" />
+          <input className="button" type="submit" value="Calculate" />
         </form>
       </main>
     </div>
