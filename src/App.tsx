@@ -1,15 +1,23 @@
 import "./app.css";
 import imgGasPump from "./assets/logo.png";
-import { useState, FormEvent } from "react";
+import { useState } from "react";
+import type { FormEvent } from "react";
 
 /*
 ethanol/gasoline
 if the result is less than 0.7, it's better to use ethanol
 */
 
+interface ResultProps {
+  title: string;
+  gasoline: number | string;
+  ethanol: number | string;
+}
+
 function App() {
   const [gasolineInput, setGasolineInput] = useState(0);
   const [ethanolInput, setEthanolInput] = useState(0);
+  const [result, setResult] = useState<ResultProps>();
 
   function calculate(event: FormEvent) {
     event.preventDefault();
@@ -17,10 +25,26 @@ function App() {
     const calculation = ethanolInput / gasolineInput;
 
     if (calculation <= 0.7) {
-      alert("It is better to use ethanol");
+      setResult({
+        title: "It is better to use ethanol",
+        gasoline: formatCurrency(gasolineInput),
+        ethanol: formatCurrency(ethanolInput),
+      });
     } else {
-      alert("It is better to use gasoline");
+      setResult({
+        title: "It is better to use gasoline",
+        gasoline: formatCurrency(gasolineInput),
+        ethanol: formatCurrency(ethanolInput),
+      });
     }
+  }
+
+  function formatCurrency(value: number) {
+    const formattedValue = value.toLocaleString("pt-br", {
+      style: "currency",
+      currency: "BRL",
+    });
+    return formattedValue;
   }
 
   return (
@@ -54,6 +78,13 @@ function App() {
           />
           <input className="button" type="submit" value="Calculate" />
         </form>
+        {result && Object.keys(result).length > 0 && (
+          <section className="result">
+            <h2 className="result-title">{result.title}</h2>
+            <span>Ethanol: {result.ethanol}</span>
+            <span>Gasoline: {result.gasoline}</span>
+          </section>
+        )}
       </main>
     </div>
   );

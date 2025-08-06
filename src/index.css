@@ -12,3 +12,31 @@ body {
   align-items: center;
   flex-direction: column;
 }
+
+.result {
+  background-color: rgb(4, 147, 135);
+  width: 100%;
+  max-width: 420px;
+  padding: 20px 28px;
+  border-radius: 4px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin: 24px 0;
+  transition: transform 0.8s;
+}
+.result:hover {
+  transform: scale(1.1);
+}
+
+.result-title {
+  font-weight: bold;
+  font-size: 24px;
+  color: aliceblue;
+  margin-bottom: 16px;
+}
+
+.result span {
+  color: aliceblue;
+  margin-bottom: 8px;
+}
